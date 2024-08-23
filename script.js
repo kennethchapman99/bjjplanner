@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const userSelections = {};
-    
+
     const questions = [
         { category: "Top Game", text: "Do you prefer to dominate from the top position?" },
         { category: "Guard Player", text: "Are you comfortable playing from the bottom, working with various guard positions?" },
@@ -32,56 +32,63 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const submitButton = document.createElement("button");
-    submitButton.textContent = "Next";
+    submitButton.textContent = "Next: Focus Levels";
     submitButton.addEventListener("click", () => {
-        document.getElementById("focus-selection").style.display = "block";
+        document.getElementById("focus-level").style.display = "block";
         showFocusSelection();
     });
     questionnaireDiv.appendChild(submitButton);
+
+    // Slide-out tray functionality
+    const trayToggle = document.getElementById("tray-toggle");
+    const chordTray = document.getElementById("chord-tray");
+
+    trayToggle.addEventListener("click", () => {
+        if (chordTray.style.right === "0px") {
+            chordTray.style.right = "-400px";
+        } else {
+            chordTray.style.right = "0px";
+        }
+    });
+
+    // Placeholder function for focus selection
+    function showFocusSelection() {
+        const focusDiv = document.getElementById("focus-selection");
+        focusDiv.innerHTML = "";
+
+        // Example focus selection logic
+        const positions = ["Guard", "Mount", "Side Control", "Back Control"];
+
+        positions.forEach(pos => {
+            const posDiv = document.createElement("div");
+            posDiv.textContent = `How would you rate your focus on ${pos}?`;
+
+            const select = document.createElement("select");
+            ["Strength", "Weakness", "Not a Priority"].forEach(level => {
+                const opt = document.createElement("option");
+                opt.value = level;
+                opt.textContent = level;
+                select.appendChild(opt);
+            });
+
+            posDiv.appendChild(select);
+            focusDiv.appendChild(posDiv);
+        });
+
+        const focusSubmitButton = document.createElement("button");
+        focusSubmitButton.textContent = "Next: See Suggestions";
+        focusSubmitButton.addEventListener("click", () => {
+            document.getElementById("suggestions").style.display = "block";
+            showSuggestions();
+        });
+        focusDiv.appendChild(focusSubmitButton);
+    }
+
+    function showSuggestions() {
+        const suggestionsDiv = document.getElementById("suggested-gameplans");
+        suggestionsDiv.innerHTML = "Suggested Gameplans based on your selections will be displayed here.";
+
+        // Placeholder logic to display suggestions
+    }
 });
 
-function showFocusSelection() {
-    const focusDiv = document.getElementById("focus-selection");
-    focusDiv.innerHTML = "";
-
-    const focusTitle = document.createElement("h3");
-    focusTitle.textContent = "Do you want to focus on specific positions or consider everything?";
-    focusDiv.appendChild(focusTitle);
-
-    const specificPositionsButton = document.createElement("button");
-    specificPositionsButton.textContent = "Focus on Specific Positions";
-    specificPositionsButton.addEventListener("click", () => {
-        showSuggestions("specificPositions");
-    });
-
-    const everythingButton = document.createElement("button");
-    everythingButton.textContent = "Consider Everything";
-    everythingButton.addEventListener("click", () => {
-        showSuggestions("everything");
-    });
-
-    focusDiv.appendChild(specificPositionsButton);
-    focusDiv.appendChild(everythingButton);
-}
-
-function showSuggestions(focus) {
-    const suggestionsDiv = document.getElementById("suggestions");
-    suggestionsDiv.style.display = "block";
-    suggestionsDiv.innerHTML = "";
-
-    const suggestionTitle = document.createElement("h3");
-    suggestionTitle.textContent = "Suggested Techniques";
-    suggestionsDiv.appendChild(suggestionTitle);
-
-    // Example suggestions based on focus
-    const suggestions = focus === "everything"
-        ? ["Technique 1", "Technique 2", "Technique 3"]
-        : ["Guard Pass 1", "Guard Pass 2"];
-
-    suggestions.forEach(s => {
-        const suggestionDiv = document.createElement("div");
-        suggestionDiv.style.margin = "10px 0";
-        suggestionDiv.textContent = s;
-        suggestionsDiv.appendChild(suggestionDiv);
-    });
-}
