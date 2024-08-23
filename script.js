@@ -1,27 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
     const userSelections = {};
 
-    // Initialize BJJ Mentor API settings
-    const bjjMentorApiUrl = "https://api.openai.com/v1/completions"; // Replace with your BJJ Mentor API endpoint
-    const apiKey = "YOUR_API_KEY"; // Replace with your BJJ Mentor API key
+    // Initialize OpenAI API settings
+    const openAiApiUrl = "https://api.openai.com/v1/completions";
+    const apiKey = "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";
 
-    // Function to make an API call to BJJ Mentor
-    async function callBjjMentor(prompt) {
-        const response = await fetch(bjjMentorApiUrl, {
+    // Function to make an API call to OpenAI
+    async function callOpenAi(prompt) {
+        const response = await fetch(openAiApiUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${apiKey}`,
             },
             body: JSON.stringify({
-                model: "text-davinci-003", // Replace with your customGPT model
+                model: "text-davinci-003",  // Replace with your chosen model
                 prompt: prompt,
                 max_tokens: 100,
+                temperature: 0.7,  // Adjust as needed
             }),
         });
 
         const data = await response.json();
         return data.choices[0].text.trim();
+    }
+
+    // Function to display the ChatGPT spark icon
+    function addSparkIcon(parentElement) {
+        const sparkIcon = document.createElement("span");
+        sparkIcon.innerHTML = "&#x2728;";  // Unicode for spark emoji
+        sparkIcon.className = "spark-icon";
+        parentElement.appendChild(sparkIcon);
     }
 
     // Function to display initial gameplan style selection
@@ -30,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         questionnaireDiv.innerHTML = "";
 
         const prompt = "Please provide a list of BJJ gameplan styles to choose from.";
-        const stylesResponse = await callBjjMentor(prompt);
+        const stylesResponse = await callOpenAi(prompt);
         const styles = stylesResponse.split("\n");
 
         styles.forEach(style => {
@@ -58,6 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
             showFocusSelection();
         });
         questionnaireDiv.appendChild(submitButton);
+
+        // Add the spark icon to indicate ChatGPT was used
+        addSparkIcon(questionnaireDiv);
     }
 
     // Function to display position focus levels
@@ -69,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         focusDiv.innerHTML = "";
 
         const prompt = "Please provide a list of BJJ positions.";
-        const positionsResponse = await callBjjMentor(prompt);
+        const positionsResponse = await callOpenAi(prompt);
         const positions = positionsResponse.split("\n");
 
         positions.forEach(pos => {
@@ -94,6 +106,9 @@ document.addEventListener("DOMContentLoaded", () => {
             showSuggestions();
         });
         focusDiv.appendChild(focusSubmitButton);
+
+        // Add the spark icon to indicate ChatGPT was used
+        addSparkIcon(focusDiv);
     }
 
     // Function to display suggested gameplans
@@ -105,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         suggestionsDiv.innerHTML = "Suggested Gameplans based on your selections will be displayed here.";
 
         const prompt = "Based on the following styles and focus levels, suggest BJJ gameplans: " + JSON.stringify(userSelections);
-        const suggestionsResponse = await callBjjMentor(prompt);
+        const suggestionsResponse = await callOpenAi(prompt);
         const suggestions = suggestionsResponse.split("\n");
 
         suggestions.forEach(s => {
@@ -114,6 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
             suggestionDiv.textContent = s;
             suggestionsDiv.appendChild(suggestionDiv);
         });
+
+        // Add the spark icon to indicate ChatGPT was used
+        addSparkIcon(suggestionsDiv);
     }
 
     // Initialize the app by showing the style selection
@@ -131,5 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
 
 
