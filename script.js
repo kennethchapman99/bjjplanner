@@ -14,10 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Authorization": `Bearer ${apiKey}`,
             },
             body: JSON.stringify({
-                model: "text-davinci-003",  // Replace with your chosen model
+                model: "text-davinci-003",
                 prompt: prompt,
-                max_tokens: 100,
-                temperature: 0.7,  // Adjust as needed
+                max_tokens: 150,
+                temperature: 0.7,
             }),
         });
 
@@ -38,9 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const questionnaireDiv = document.getElementById("questionnaire");
         questionnaireDiv.innerHTML = "";
 
-        const prompt = "Please provide a list of BJJ gameplan styles to choose from.";
+        const prompt = "What are the six most common BJJ gameplan styles?";
         const stylesResponse = await callOpenAi(prompt);
-        const styles = stylesResponse.split("\n");
+        const styles = stylesResponse.split("\n").slice(0, 6);
 
         styles.forEach(style => {
             const styleDiv = document.createElement("div");
@@ -60,6 +60,25 @@ document.addEventListener("DOMContentLoaded", () => {
             styleDiv.appendChild(checkbox);
             questionnaireDiv.appendChild(styleDiv);
         });
+
+        // Add the "Other" option for a custom gameplan
+        const otherDiv = document.createElement("div");
+        otherDiv.style.margin = "10px 0";
+
+        const otherLabel = document.createElement("label");
+        otherLabel.textContent = "Other: ";
+
+        const otherInput = document.createElement("input");
+        otherInput.type = "text";
+        otherInput.placeholder = "Enter your own gameplan";
+        otherInput.style.marginLeft = "10px";
+        otherInput.addEventListener("input", () => {
+            userSelections["Other"] = otherInput.value;
+        });
+
+        otherDiv.appendChild(otherLabel);
+        otherDiv.appendChild(otherInput);
+        questionnaireDiv.appendChild(otherDiv);
 
         const submitButton = document.createElement("button");
         submitButton.textContent = "Next: Focus Levels";
@@ -137,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize the app by showing the style selection
     showStyleSelection();
 
-    // Slide-out tray functionality
+    // Slide-out tray functionality with Observable chord diagram
     const trayToggle = document.getElementById("tray-toggle");
     const chordTray = document.getElementById("chord-tray");
 
@@ -148,7 +167,11 @@ document.addEventListener("DOMContentLoaded", () => {
             chordTray.style.right = "0px";
         }
     });
+
+    // Embed Observable chord diagram
+    document.getElementById("chord-diagram").src = "https://observablehq.com/embed/@ken-chapman/bjjmap?cells=viewof+diagram";
 });
+
 
 
 
