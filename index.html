@@ -8,11 +8,36 @@
 </head>
 <body>
     <div id="app">
-        <h1>Build Your BJJ Gameplan</h1>
-        <div id="questionnaire"></div>
-        <div id="focus-selection" style="display: none;"></div>
-        <div id="suggestions" style="display: none;"></div>
+        <header>
+            <h1>BJJ Gameplan Builder</h1>
+        </header>
+        <main>
+            <section id="gameplan-description">
+                <h2>Describe Your Gameplan</h2>
+                <div id="questionnaire"></div>
+            </section>
+            <section id="focus-level" style="display: none;">
+                <h2>Select Focus Levels</h2>
+                <div id="focus-selection"></div>
+            </section>
+            <section id="suggestions" style="display: none;">
+                <h2>Suggested Gameplans</h2>
+                <div id="suggested-gameplans"></div>
+            </section>
+            <section id="feedback" style="display: none;">
+                <h2>Feedback and Adjustments</h2>
+                <textarea id="feedback-input" placeholder="Provide feedback here..."></textarea>
+                <button id="submit-feedback">Submit Feedback</button>
+            </section>
+        </main>
     </div>
+
+    <div id="chord-tray">
+        <iframe id="chord-diagram" src="https://observablehq.com/embed/your-chord-diagram-url"></iframe>
+    </div>
+    <button id="tray-toggle">Chord Diagram</button>
+
     <script src="script.js"></script>
 </body>
 </html>
+
