@@ -23,12 +23,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }),
             });
 
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
             const data = await response.json();
             hideMessage();
             return data.choices[0].text.trim();
         } catch (error) {
             hideMessage();
-            showMessage("Failed to get response from ChatGPT.", false);
+            showMessage(`Failed to get response from ChatGPT: ${error.message}`, false);
             console.error("Error:", error);
             return null;
         }
@@ -203,9 +207,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Embed Observable chord diagram (corrected)
+    // Corrected embed for Observable chord diagram
     document.getElementById("chord-diagram").src = "https://observablehq.com/embed/@ken-chapman/bjjmap?cells=viewof+diagram";
 });
+
+
 
 
 
