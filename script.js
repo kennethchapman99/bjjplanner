@@ -1,63 +1,76 @@
 document.addEventListener("DOMContentLoaded", () => {
     const userSelections = {};
 
-    const questions = [
-        { category: "Top Game", text: "Do you prefer to dominate from the top position?" },
-        { category: "Guard Player", text: "Are you comfortable playing from the bottom, working with various guard positions?" },
-        { category: "Lapel Player", text: "Do you incorporate lapel grips and techniques into your game?" },
-        { category: "Pressure Passer", text: "Do you prefer to pass the guard with heavy pressure and control?" },
-        { category: "Speed Passer", text: "Are you more inclined to use quick, dynamic movements to pass the guard?" },
-        { category: "No Gi", text: "Is your focus on No Gi techniques, where grips and movement are different from Gi?" },
-    ];
+    // Initialize BJJ Mentor API settings
+    const bjjMentorApiUrl = "https://api.openai.com/v1/completions"; // Replace with your BJJ Mentor API endpoint
+    const apiKey = "YOUR_API_KEY"; // Replace with your BJJ Mentor API key
 
-    const questionnaireDiv = document.getElementById("questionnaire");
-
-    questions.forEach(q => {
-        const questionDiv = document.createElement("div");
-        questionDiv.style.margin = "10px 0";
-
-        const label = document.createElement("label");
-        label.textContent = q.text;
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.style.marginLeft = "10px";
-        checkbox.addEventListener("change", () => {
-            userSelections[q.category] = checkbox.checked;
+    // Function to make an API call to BJJ Mentor
+    async function callBjjMentor(prompt) {
+        const response = await fetch(bjjMentorApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+                model: "text-davinci-003", // Replace with your customGPT model
+                prompt: prompt,
+                max_tokens: 100,
+            }),
         });
 
-        questionDiv.appendChild(label);
-        questionDiv.appendChild(checkbox);
-        questionnaireDiv.appendChild(questionDiv);
-    });
+        const data = await response.json();
+        return data.choices[0].text.trim();
+    }
 
-    const submitButton = document.createElement("button");
-    submitButton.textContent = "Next: Focus Levels";
-    submitButton.addEventListener("click", () => {
+    // Function to display initial gameplan style selection
+    async function showStyleSelection() {
+        const questionnaireDiv = document.getElementById("questionnaire");
+        questionnaireDiv.innerHTML = "";
+
+        const prompt = "Please provide a list of BJJ gameplan styles to choose from.";
+        const stylesResponse = await callBjjMentor(prompt);
+        const styles = stylesResponse.split("\n");
+
+        styles.forEach(style => {
+            const styleDiv = document.createElement("div");
+            styleDiv.style.margin = "10px 0";
+
+            const label = document.createElement("label");
+            label.textContent = style;
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.style.marginLeft = "10px";
+            checkbox.addEventListener("change", () => {
+                userSelections[style] = checkbox.checked;
+            });
+
+            styleDiv.appendChild(label);
+            styleDiv.appendChild(checkbox);
+            questionnaireDiv.appendChild(styleDiv);
+        });
+
+        const submitButton = document.createElement("button");
+        submitButton.textContent = "Next: Focus Levels";
+        submitButton.addEventListener("click", () => {
+            showFocusSelection();
+        });
+        questionnaireDiv.appendChild(submitButton);
+    }
+
+    // Function to display position focus levels
+    async function showFocusSelection() {
+        document.getElementById("gameplan-description").style.display = "none";
         document.getElementById("focus-level").style.display = "block";
-        showFocusSelection();
-    });
-    questionnaireDiv.appendChild(submitButton);
 
-    // Slide-out tray functionality
-    const trayToggle = document.getElementById("tray-toggle");
-    const chordTray = document.getElementById("chord-tray");
-
-    trayToggle.addEventListener("click", () => {
-        if (chordTray.style.right === "0px") {
-            chordTray.style.right = "-400px";
-        } else {
-            chordTray.style.right = "0px";
-        }
-    });
-
-    // Placeholder function for focus selection
-    function showFocusSelection() {
         const focusDiv = document.getElementById("focus-selection");
         focusDiv.innerHTML = "";
 
-        // Example focus selection logic
-        const positions = ["Guard", "Mount", "Side Control", "Back Control"];
+        const prompt = "Please provide a list of BJJ positions.";
+        const positionsResponse = await callBjjMentor(prompt);
+        const positions = positionsResponse.split("\n");
 
         positions.forEach(pos => {
             const posDiv = document.createElement("div");
@@ -78,17 +91,45 @@ document.addEventListener("DOMContentLoaded", () => {
         const focusSubmitButton = document.createElement("button");
         focusSubmitButton.textContent = "Next: See Suggestions";
         focusSubmitButton.addEventListener("click", () => {
-            document.getElementById("suggestions").style.display = "block";
             showSuggestions();
         });
         focusDiv.appendChild(focusSubmitButton);
     }
 
-    function showSuggestions() {
+    // Function to display suggested gameplans
+    async function showSuggestions() {
+        document.getElementById("focus-level").style.display = "none";
+        document.getElementById("suggestions").style.display = "block";
+
         const suggestionsDiv = document.getElementById("suggested-gameplans");
         suggestionsDiv.innerHTML = "Suggested Gameplans based on your selections will be displayed here.";
 
-        // Placeholder logic to display suggestions
+        const prompt = "Based on the following styles and focus levels, suggest BJJ gameplans: " + JSON.stringify(userSelections);
+        const suggestionsResponse = await callBjjMentor(prompt);
+        const suggestions = suggestionsResponse.split("\n");
+
+        suggestions.forEach(s => {
+            const suggestionDiv = document.createElement("div");
+            suggestionDiv.style.margin = "10px 0";
+            suggestionDiv.textContent = s;
+            suggestionsDiv.appendChild(suggestionDiv);
+        });
     }
+
+    // Initialize the app by showing the style selection
+    showStyleSelection();
+
+    // Slide-out tray functionality
+    const trayToggle = document.getElementById("tray-toggle");
+    const chordTray = document.getElementById("chord-tray");
+
+    trayToggle.addEventListener("click", () => {
+        if (chordTray.style.right === "0px") {
+            chordTray.style.right = "-400px";
+        } else {
+            chordTray.style.right = "0px";
+        }
+    });
 });
+
 
