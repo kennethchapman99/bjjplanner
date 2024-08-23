@@ -7,22 +7,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to make an API call to OpenAI
     async function callOpenAi(prompt) {
-        const response = await fetch(openAiApiUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify({
-                model: "text-davinci-003",
-                prompt: prompt,
-                max_tokens: 150,
-                temperature: 0.7,
-            }),
-        });
+        showMessage("Waiting for ChatGPT response...", true);
+        try {
+            const response = await fetch(openAiApiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({
+                    model: "text-davinci-003",
+                    prompt: prompt,
+                    max_tokens: 150,
+                    temperature: 0.7,
+                }),
+            });
 
-        const data = await response.json();
-        return data.choices[0].text.trim();
+            const data = await response.json();
+            hideMessage();
+            return data.choices[0].text.trim();
+        } catch (error) {
+            hideMessage();
+            showMessage("Failed to get response from ChatGPT.", false);
+            console.error("Error:", error);
+            return null;
+        }
     }
 
     // Function to display the ChatGPT spark icon
@@ -33,6 +42,29 @@ document.addEventListener("DOMContentLoaded", () => {
         parentElement.appendChild(sparkIcon);
     }
 
+    // Function to show messages on the page
+    function showMessage(message, isLoading = false) {
+        let messageDiv = document.getElementById("status-message");
+        if (!messageDiv) {
+            messageDiv = document.createElement("div");
+            messageDiv.id = "status-message";
+            messageDiv.style.marginTop = "20px";
+            document.getElementById("app").appendChild(messageDiv);
+        }
+        messageDiv.innerHTML = message;
+        if (isLoading) {
+            messageDiv.innerHTML += " <img src='spinner.gif' alt='Loading...' style='width:20px;height:20px;'>";
+        }
+    }
+
+    // Function to hide messages
+    function hideMessage() {
+        const messageDiv = document.getElementById("status-message");
+        if (messageDiv) {
+            messageDiv.innerHTML = "";
+        }
+    }
+
     // Function to display initial gameplan style selection
     async function showStyleSelection() {
         const questionnaireDiv = document.getElementById("questionnaire");
@@ -40,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const prompt = "What are the six most common BJJ gameplan styles?";
         const stylesResponse = await callOpenAi(prompt);
+        if (!stylesResponse) return;
         const styles = stylesResponse.split("\n").slice(0, 6);
 
         styles.forEach(style => {
@@ -101,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const prompt = "Please provide a list of BJJ positions.";
         const positionsResponse = await callOpenAi(prompt);
+        if (!positionsResponse) return;
         const positions = positionsResponse.split("\n");
 
         positions.forEach(pos => {
@@ -140,6 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const prompt = "Based on the following styles and focus levels, suggest BJJ gameplans: " + JSON.stringify(userSelections);
         const suggestionsResponse = await callOpenAi(prompt);
+        if (!suggestionsResponse) return;
         const suggestions = suggestionsResponse.split("\n");
 
         suggestions.forEach(s => {
@@ -168,9 +203,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Embed Observable chord diagram
+    // Embed Observable chord diagram (corrected)
     document.getElementById("chord-diagram").src = "https://observablehq.com/embed/@ken-chapman/bjjmap?cells=viewof+diagram";
 });
+
+
 
 
 
