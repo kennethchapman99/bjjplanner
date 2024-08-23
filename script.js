@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to make an API call to OpenAI
     async function callOpenAi(prompt) {
         showMessage("Waiting for ChatGPT response...", true);
+        console.log("Sending prompt to OpenAI:", prompt);
         try {
             const response = await fetch(openAiApiUrl, {
                 method: "POST",
@@ -24,16 +25,18 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (!response.ok) {
+                console.error(`HTTP error! status: ${response.status}`);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
             hideMessage();
+            console.log("Received response from OpenAI:", data);
             return data.choices[0].text.trim();
         } catch (error) {
             hideMessage();
             showMessage(`Failed to get response from ChatGPT: ${error.message}`, false);
-            console.error("Error:", error);
+            console.error("Error during API call:", error);
             return null;
         }
     }
@@ -210,6 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Corrected embed for Observable chord diagram
     document.getElementById("chord-diagram").src = "https://observablehq.com/embed/@ken-chapman/bjjmap?cells=viewof+diagram";
 });
+
 
 
 
