@@ -12,37 +12,50 @@
             <h1>BJJ Gameplan Builder</h1>
         </header>
         <main>
-            <section id="gameplan-description">
-                <h2>Describe Your Gameplan</h2>
-                <div id="questionnaire"></div>
+            <section id="gameplan-selection">
+                <h2>Select Your Gameplan</h2>
+                <form id="gameplan-form">
+                    <label><input type="checkbox" name="gameplan" value="pressure_player"> Pressure Player</label><br>
+                    <label><input type="checkbox" name="gameplan" value="top_game"> Top Game</label><br>
+                    <label><input type="checkbox" name="gameplan" value="lapel_guard_sweeps"> Lapel Guard and Sweeps</label><br>
+                    <label><input type="checkbox" name="gameplan" value="half_guard_wizard"> Half Guard Wizard</label><br>
+                    <label><input type="checkbox" name="gameplan" value="no_gi_specialist"> No Gi Specialist</label><br>
+                    <label><input type="checkbox" name="gameplan" value="leg_locker"> Leg Locker</label><br>
+                    <label><input type="checkbox" name="gameplan" value="old_man_game"> Old Man Game</label><br>
+                    <label><input type="checkbox" name="gameplan" value="speed_athleticism"> Speed and Athleticism</label><br>
+                </form>
+                <button onclick="showPositionFocus()">Next: Set Position Focus</button>
             </section>
-            <section id="focus-level" style="display: none;">
-                <h2>Select Focus Levels</h2>
-                <div id="focus-selection"></div>
+
+            <section id="position-focus" style="display:none;">
+                <h2>Set Position Focus</h2>
+                <div id="positions"></div>
+                <button onclick="showSuggestions()">Next: Get Suggestions</button>
             </section>
-            <section id="suggestions" style="display: none;">
-                <h2>Suggested Gameplans</h2>
-                <div id="suggested-gameplans"></div>
+
+            <section id="suggestions" style="display:none;">
+                <h2>Suggested Techniques</h2>
+                <div id="techniques"></div>
+                <button onclick="showFeedback()">Next: Give Feedback</button>
             </section>
-            <section id="feedback" style="display: none;">
-                <h2>Feedback and Adjustments</h2>
-                <textarea id="feedback-input" placeholder="Provide feedback here..."></textarea>
-                <button id="submit-feedback">Submit Feedback</button>
+
+            <section id="feedback" style="display:none;">
+                <h2>Provide Feedback</h2>
+                <textarea id="feedback-input" placeholder="Your feedback..."></textarea>
+                <button onclick="updateGameplan()">Submit Feedback</button>
             </section>
-            <!-- Status Message Div -->
-            <div id="status-message"></div>
         </main>
     </div>
 
-    <!-- Slide-Out Tray for Technique Map -->
     <div id="chord-tray" style="position: fixed; right: -400px; top: 0; width: 400px; height: 100%; background-color: #f0f8ff; box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); transition: right 0.3s ease;">
-        <iframe id="chord-diagram" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+        <iframe id="chord-diagram" src="https://observablehq.com/embed/@ken-chapman/bjjmap?cells=viewof+diagram" style="width: 100%; height: 100%; border: none;"></iframe>
     </div>
     <button id="tray-toggle">Technique Map</button>
 
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
