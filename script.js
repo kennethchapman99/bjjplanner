@@ -1,204 +1,105 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const userSelections = {};
+    const gameplans = {
+        "pressure_player": "Pressure Player",
+        "top_game": "Top Game",
+        "lapel_guard_sweeps": "Lapel Guard and Sweeps",
+        "half_guard_wizard": "Half Guard Wizard",
+        "no_gi_specialist": "No Gi Specialist",
+        "leg_locker": "Leg Locker",
+        "old_man_game": "Old Man Game",
+        "speed_athleticism": "Speed and Athleticism"
+    };
 
-    // Initialize OpenAI API settings
-    const openAiApiUrl = "https://api.openai.com/v1/completions";
-    const apiKey = "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";
+    const positions = {
+        "pressure_player": ["Side Control", "Mount"],
+        "top_game": ["Mount", "Side Control", "Knee on Belly"],
+        "lapel_guard_sweeps": ["Closed Guard", "Spider Guard"],
+        "half_guard_wizard": ["Half Guard"],
+        "no_gi_specialist": ["Butterfly Guard", "Single Leg X"],
+        "leg_locker": ["Ashigurami", "Single Leg X"],
+        "old_man_game": ["Closed Guard", "Mount"],
+        "speed_athleticism": ["De La Riva", "X Guard"]
+    };
 
-    // Function to make an API call to OpenAI
-    async function callOpenAi(prompt) {
-        showMessage("Waiting for ChatGPT response...", true);
-        console.log("Sending prompt to OpenAI:", prompt);
-        try {
-            const response = await fetch(openAiApiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${apiKey}`,
-                },
-                body: JSON.stringify({
-                    model: "text-davinci-003",
-                    prompt: prompt,
-                    max_tokens: 150,
-                    temperature: 0.7,
-                }),
+    const techniques = {
+        "pressure_player": [
+            {"position": "Side Control", "technique": "Knee on Belly", "video": "https://vimeo.com/example1"},
+            {"position": "Mount", "technique": "Cross Collar Choke", "video": "https://vimeo.com/example2"}
+        ],
+        "top_game": [
+            {"position": "Mount", "technique": "Armbar from Mount", "video": "https://vimeo.com/example3"},
+            {"position": "Side Control", "technique": "Americana", "video": "https://vimeo.com/example4"}
+        ]
+        // Add more techniques for other gameplans...
+    };
+
+    const feedbackResponses = {
+        "pressure_player": "Consider adding some advanced transitions from Side Control.",
+        "top_game": "Try adding some submissions from Knee on Belly."
+        // Add more feedback responses for other gameplans...
+    };
+
+    function showPositionFocus() {
+        document.getElementById("gameplan-selection").style.display = "none";
+        document.getElementById("position-focus").style.display = "block";
+        const selectedGameplans = getSelectedGameplans();
+        const positionsDiv = document.getElementById("positions");
+        positionsDiv.innerHTML = "";
+
+        selectedGameplans.forEach(gameplan => {
+            const positionsList = positions[gameplan] || [];
+            positionsList.forEach(position => {
+                positionsDiv.innerHTML += `<div><strong>${position}</strong><br>
+                    <label><input type="radio" name="${position}" value="strength"> Strength</label>
+                    <label><input type="radio" name="${position}" value="weakness"> Weakness</label>
+                    <label><input type="radio" name="${position}" value="not_priority"> Not a Priority</label>
+                    </div>`;
             });
-
-            if (!response.ok) {
-                console.error(`HTTP error! status: ${response.status}`);
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            hideMessage();
-            console.log("Received response from OpenAI:", data);
-            return data.choices[0].text.trim();
-        } catch (error) {
-            hideMessage();
-            showMessage(`Failed to get response from ChatGPT: ${error.message}`, false);
-            console.error("Error during API call:", error);
-            return null;
-        }
-    }
-
-    // Function to display the ChatGPT spark icon
-    function addSparkIcon(parentElement) {
-        const sparkIcon = document.createElement("span");
-        sparkIcon.innerHTML = "&#x2728;";  // Unicode for spark emoji
-        sparkIcon.className = "spark-icon";
-        parentElement.appendChild(sparkIcon);
-    }
-
-    // Function to show messages on the page
-    function showMessage(message, isLoading = false) {
-        let messageDiv = document.getElementById("status-message");
-        if (!messageDiv) {
-            messageDiv = document.createElement("div");
-            messageDiv.id = "status-message";
-            messageDiv.style.marginTop = "20px";
-            document.getElementById("app").appendChild(messageDiv);
-        }
-        messageDiv.innerHTML = message;
-        if (isLoading) {
-            messageDiv.innerHTML += " <img src='spinner.gif' alt='Loading...' style='width:20px;height:20px;'>";
-        }
-    }
-
-    // Function to hide messages
-    function hideMessage() {
-        const messageDiv = document.getElementById("status-message");
-        if (messageDiv) {
-            messageDiv.innerHTML = "";
-        }
-    }
-
-    // Function to display initial gameplan style selection
-    async function showStyleSelection() {
-        const questionnaireDiv = document.getElementById("questionnaire");
-        questionnaireDiv.innerHTML = "";
-
-        const prompt = "What are the six most common BJJ gameplan styles?";
-        const stylesResponse = await callOpenAi(prompt);
-        if (!stylesResponse) return;
-        const styles = stylesResponse.split("\n").slice(0, 6);
-
-        styles.forEach(style => {
-            const styleDiv = document.createElement("div");
-            styleDiv.style.margin = "10px 0";
-
-            const label = document.createElement("label");
-            label.textContent = style;
-
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.style.marginLeft = "10px";
-            checkbox.addEventListener("change", () => {
-                userSelections[style] = checkbox.checked;
-            });
-
-            styleDiv.appendChild(label);
-            styleDiv.appendChild(checkbox);
-            questionnaireDiv.appendChild(styleDiv);
         });
-
-        // Add the "Other" option for a custom gameplan
-        const otherDiv = document.createElement("div");
-        otherDiv.style.margin = "10px 0";
-
-        const otherLabel = document.createElement("label");
-        otherLabel.textContent = "Other: ";
-
-        const otherInput = document.createElement("input");
-        otherInput.type = "text";
-        otherInput.placeholder = "Enter your own gameplan";
-        otherInput.style.marginLeft = "10px";
-        otherInput.addEventListener("input", () => {
-            userSelections["Other"] = otherInput.value;
-        });
-
-        otherDiv.appendChild(otherLabel);
-        otherDiv.appendChild(otherInput);
-        questionnaireDiv.appendChild(otherDiv);
-
-        const submitButton = document.createElement("button");
-        submitButton.textContent = "Next: Focus Levels";
-        submitButton.addEventListener("click", () => {
-            showFocusSelection();
-        });
-        questionnaireDiv.appendChild(submitButton);
-
-        // Add the spark icon to indicate ChatGPT was used
-        addSparkIcon(questionnaireDiv);
     }
 
-    // Function to display position focus levels
-    async function showFocusSelection() {
-        document.getElementById("gameplan-description").style.display = "none";
-        document.getElementById("focus-level").style.display = "block";
-
-        const focusDiv = document.getElementById("focus-selection");
-        focusDiv.innerHTML = "";
-
-        const prompt = "Please provide a list of BJJ positions.";
-        const positionsResponse = await callOpenAi(prompt);
-        if (!positionsResponse) return;
-        const positions = positionsResponse.split("\n");
-
-        positions.forEach(pos => {
-            const posDiv = document.createElement("div");
-            posDiv.textContent = `How would you rate your focus on ${pos}?`;
-
-            const select = document.createElement("select");
-            ["Strength", "Weakness", "Not a Priority"].forEach(level => {
-                const opt = document.createElement("option");
-                opt.value = level;
-                opt.textContent = level;
-                select.appendChild(opt);
-            });
-
-            posDiv.appendChild(select);
-            focusDiv.appendChild(posDiv);
-        });
-
-        const focusSubmitButton = document.createElement("button");
-        focusSubmitButton.textContent = "Next: See Suggestions";
-        focusSubmitButton.addEventListener("click", () => {
-            showSuggestions();
-        });
-        focusDiv.appendChild(focusSubmitButton);
-
-        // Add the spark icon to indicate ChatGPT was used
-        addSparkIcon(focusDiv);
-    }
-
-    // Function to display suggested gameplans
-    async function showSuggestions() {
-        document.getElementById("focus-level").style.display = "none";
+    function showSuggestions() {
+        document.getElementById("position-focus").style.display = "none";
         document.getElementById("suggestions").style.display = "block";
+        const selectedGameplans = getSelectedGameplans();
+        const techniquesDiv = document.getElementById("techniques");
+        techniquesDiv.innerHTML = "";
 
-        const suggestionsDiv = document.getElementById("suggested-gameplans");
-        suggestionsDiv.innerHTML = "Suggested Gameplans based on your selections will be displayed here.";
-
-        const prompt = "Based on the following styles and focus levels, suggest BJJ gameplans: " + JSON.stringify(userSelections);
-        const suggestionsResponse = await callOpenAi(prompt);
-        if (!suggestionsResponse) return;
-        const suggestions = suggestionsResponse.split("\n");
-
-        suggestions.forEach(s => {
-            const suggestionDiv = document.createElement("div");
-            suggestionDiv.style.margin = "10px 0";
-            suggestionDiv.textContent = s;
-            suggestionsDiv.appendChild(suggestionDiv);
+        selectedGameplans.forEach(gameplan => {
+            const techniquesList = techniques[gameplan] || [];
+            techniquesList.forEach(tech => {
+                techniquesDiv.innerHTML += `<div><strong>${tech.position}:</strong> ${tech.technique} 
+                    <a href="${tech.video}" target="_blank">Watch Video</a></div>`;
+            });
         });
-
-        // Add the spark icon to indicate ChatGPT was used
-        addSparkIcon(suggestionsDiv);
     }
 
-    // Initialize the app by showing the style selection
-    showStyleSelection();
+    function showFeedback() {
+        document.getElementById("suggestions").style.display = "none";
+        document.getElementById("feedback").style.display = "block";
+    }
 
-    // Slide-out tray functionality with Observable chord diagram
+    function updateGameplan() {
+        const feedbackInput = document.getElementById("feedback-input").value;
+        const selectedGameplans = getSelectedGameplans();
+        let feedbackMessage = "";
+
+        selectedGameplans.forEach(gameplan => {
+            feedbackMessage += `${gameplans[gameplan]}: ${feedbackResponses[gameplan]} <br>`;
+        });
+
+        feedbackMessage += `<br> Your Feedback: ${feedbackInput}`;
+        alert(feedbackMessage);
+    }
+
+    function getSelectedGameplans() {
+        const form = document.getElementById("gameplan-form");
+        return Array.from(form.elements)
+            .filter(el => el.checked)
+            .map(el => el.value);
+    }
+
+    // Slide-out tray functionality
     const trayToggle = document.getElementById("tray-toggle");
     const chordTray = document.getElementById("chord-tray");
 
@@ -209,10 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
             chordTray.style.right = "0px";
         }
     });
-
-    // Corrected embed for Observable chord diagram
-    document.getElementById("chord-diagram").src = "https://observablehq.com/embed/@ken-chapman/bjjmap?cells=viewof+diagram";
 });
+
 
 
 
