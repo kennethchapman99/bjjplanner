@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#07111b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Healthy Strength · iPhone Workout Test</title>
+<style>
+:root{color-scheme:dark;--bg:#08131e;--panel:#132538;--panel2:#1b3247;--line:#355066;--cyan:#72ddec;--lime:#c3ed85;--muted:#9eb4c7;--white:#f3f9ff;--red:#fc7e83;--amber:#f5c77d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif;-webkit-tap-highlight-color:transparent}button,input,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{opacity:.4;cursor:default}#app{max-width:560px;min-height:100dvh;margin:auto;padding:calc(16px + env(safe-area-inset-top)) 19px calc(24px + env(safe-area-inset-bottom));background:radial-gradient(ellipse at 100% 0,#12394b 0,transparent 45%),var(--bg)}.top{display:flex;align-items:center;justify-content:space-between;margin:0 0 22px}.logo{font-size:26px;font-weight:900;letter-spacing:-1.3px}.logo em{font-style:normal;color:var(--cyan)}.tag{padding:6px 10px;border:1px solid #3d6571;border-radius:30px;font-size:10px;color:var(--cyan);font-weight:900;letter-spacing:.6px}.eyebrow{font-size:11px;letter-spacing:1.7px;font-weight:900;color:var(--cyan);text-transform:uppercase}h1{font-size:32px;line-height:1.05;margin:14px 0;letter-spacing:-1px}h2{font-size:24px;line-height:1.13;letter-spacing:-.65px;margin:9px 0}p{color:var(--muted);font-size:14px;margin:10px 0 15px}.panel{background:var(--panel);border:1px solid #2b4b5d;border-radius:18px;padding:17px;margin:16px 0}.days{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:23px 0 15px}.day{background:#192e42;color:var(--white);border:1px solid #355067;border-radius:14px;padding:11px 4px;min-height:78px;font-size:25px;font-weight:900}.day small{font-size:10px;display:block;color:var(--muted);font-weight:600}.day.active{color:var(--cyan);border-color:var(--cyan);background:#163748}.row{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid #2b4557;font-size:13px}.row:first-child{border:0}.row b{font-weight:800}.row span:last-child{text-align:right}.muted{color:var(--muted)}.big{display:block;width:100%;border:0;border-radius:15px;background:var(--cyan);color:#071822;padding:16px;font-size:18px;font-weight:850;min-height:59px;margin-top:18px}.ghost{border:1px solid #365469;background:var(--panel2);color:var(--white);border-radius:12px;min-height:45px;font-size:13px;font-weight:800;padding:10px 14px}.actions{display:flex;gap:9px;align-items:center;margin:14px 0;flex-wrap:wrap}.actions>*{flex:1}.small{font-size:12px;color:var(--muted)}.center{text-align:center}.clock{font-size:clamp(83px,24vw,136px);letter-spacing:-.09em;font-weight:950;line-height:1.05;text-align:center;margin:26px 0 12px;font-variant-numeric:tabular-nums}.clock.amber{color:var(--amber)}.clock.red{color:var(--red)}.phase{text-align:center;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);font-weight:900}.go{text-align:center;color:var(--lime);font-weight:900;font-size:17px;height:27px}.move{text-align:center;font-size:clamp(28px,8vw,39px);font-weight:900;letter-spacing:-1.1px;line-height:1.1;min-height:68px;display:grid;place-items:center;margin:10px 0}.target{text-align:center;color:#c5d6e4;font-size:20px;font-weight:850}.next{text-align:center;color:var(--muted);font-size:13px;margin:22px 0 11px;min-height:42px}.next strong{display:block;color:var(--white);font-size:18px}.progress{height:7px;border-radius:10px;background:#274255;overflow:hidden;margin:14px 0 24px}.progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),#a1efca);transition:width .2s linear}.timer-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.warm{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:20px 0 32px}.warm div{background:#14293b;border-radius:10px;padding:9px;font-size:12px;color:#c7d8e4}.warm div:before{content:"✓ ";color:var(--lime)}.check{display:block;width:100%;padding:20px 10px;min-height:78px;border:0;border-radius:16px;background:#78e1f0;color:#08202b;font-size:23px;font-weight:900;margin:25px 0 8px}.check.complete{background:var(--lime)}.remain{text-align:center;font-size:13px;color:var(--muted);margin-top:9px}.foot{font-size:11px;text-align:center;color:#7493a7;margin:20px 0}.notice{border:1px solid #4b6b67;background:#173b36;border-radius:12px;padding:12px;color:#c3efdc;font-size:12px;line-height:1.5;margin:14px 0}.switch{accent-color:var(--cyan);width:19px;height:19px}.logrow{display:grid;grid-template-columns:minmax(0,1fr) 70px 70px;gap:8px;align-items:center;border-top:1px solid #29485d;padding:10px 0}.logrow:first-child{border-top:0}.logrow b{font-size:13px}.logrow small{display:block;color:var(--muted);font-size:11px}.logrow label{display:block;text-align:center;font-size:11px;color:var(--muted)}input[type=number]{width:100%;border:1px solid #48657b;border-radius:10px;padding:9px 2px;text-align:center;background:#081b2d;color:var(--white);font-size:16px}select{background:#081b2d;color:white;border:1px solid #48657b;border-radius:10px;padding:8px;font-size:13px;max-width:125px}textarea{width:100%;min-height:60px;background:#081b2d;color:white;border:1px solid #48657b;border-radius:10px;padding:9px}button:focus-visible,input:focus-visible{outline:2px solid var(--lime);outline-offset:2px} .badge{font-weight:900;color:var(--lime)}.note{font-size:12px;color:#a2b8c9}
+</style>
+</head>
+<body><main id="app"><div class="top"><div class="logo">Healthy<em>.</em></div><span class="tag">TEST WORKOUT</span></div><h1>Strength</h1><p>Loading the interactive workout…</p><noscript>This workout requires JavaScript. Open the page in Safari.</noscript></main>
+<script>
+(function(){
+"use strict";
+var P={
+a:{name:"Hinge",warm:["Hip hinge drill ×10","Band pull-apart ×15","Glute bridge ×12","Shoulder circles ×10"],heavy:["Trap-Bar Deadlift","3 reps"],circuit:[["KB Swing","15 reps"],["Pull-ups","5–8 reps"],["Farmer’s Carry","40 seconds"]]},
+b:{name:"Squat + Push",warm:["Hip openers ×8/side","Ankle rocks ×10","Thoracic rotations ×8/side","Scap pull-up ×8"],heavy:["Heel-Elevated Goblet Squat","5 reps"],circuit:[["Dips","6–10 reps"],["KB Row","10 reps"],["Band Face Pull","20 reps"]]},
+c:{name:"Posterior + Armor",warm:["Bear crawl ×20 m","Cossack squat ×6/side","Scap push-up ×10","Clubbell mill ×6/side"],heavy:["Barbell RDL","5 reps"],circuit:[["KB Swing","15 reps"],["Split Squat","8 reps/leg"],["Clubbell Mill","6 reps/side"]]},
+d:{name:"Floor · Never Zero",warm:[],heavy:null,circuit:[["KB Swing","15 reps"],["Dips","6–10 reps"]]}
+};
+var S={day:"a",screen:"home",speed:1,base:0,stamp:0,paused:false,started:false,done:new Map(),heard:new Set(),sound:true,sore:false,elapsed:0,notes:"",awake:null};
+var app=document.getElementById("app");
+function total(){return S.day==="d"?600:1560}
+function elapsed(){return Math.min(total(),S.started&&!S.paused?S.base+(Date.now()-S.stamp)*S.speed/1000:S.base)}
+function fmt(v){v=Math.max(0,Math.floor(v));return Math.floor(v/60)+":"+String(v%60).padStart(2,"0")}
+function x(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function frame(raw){
+ var e=Math.floor(Math.max(0,raw)),left=Math.max(0,total()-e);
+ if(e>=total())return {phase:"Complete",left:0,rem:0,slot:null,name:"Workout complete",target:""};
+ if(S.day==="d"){
+ var m=Math.floor(e/60),i=m%2;
+ return {phase:"Floor · EMOM",left:left,rem:60-e%60,slot:m,round:m+1,count:10,name:P.d.circuit[i][0],target:P.d.circuit[i][1],next:P.d.circuit[(i+1)%2][0],go:e%60<20};
+ }
+ if(e<180)return {phase:"Warm-up",left:left,rem:180-e,slot:null,name:"Get moving",target:"Warm-up · 3 minutes",next:P[S.day].heavy[0],warm:true};
+ if(e<240)return {phase:"Set up",left:left,rem:240-e,slot:null,name:"Prepare your heavy lift",target:"1-minute setup",next:P[S.day].heavy[0]};
+ if(e<840){
+ var h=e-240,round=Math.floor(h/120),rem=120-h%120;
+ if(S.sore&&round===4)return {phase:"Heavy · recovery",left:left,rem:rem,slot:null,name:"Extra recovery",target:"BJJ soreness adjustment",next:P[S.day].circuit[0][0],round:5,count:5};
+ return {phase:"Heavy · E2MOM",left:left,rem:rem,slot:round,round:round+1,count:5,name:P[S.day].heavy[0],target:P[S.day].heavy[1],next:round===4?P[S.day].circuit[0][0]:P[S.day].heavy[0],go:h%120<20};
+ }
+ var c=e-840,m=Math.floor(c/60),i=m%3;
+ return {phase:"Circuit · EMOM",left:left,rem:60-c%60,slot:5+m,round:m+1,count:12,name:P[S.day].circuit[i][0],target:P[S.day].circuit[i][1],next:P[S.day].circuit[(i+1)%3][0],go:c%60<20};
+}
+function header(){return '<div class="top"><div class="logo">Healthy<em>.</em></div><div class="tag">NO STORAGE · TEST</div></div>'}
+function render(){
+ var w=P[S.day],html=header(),f;
+ if(S.screen==="home"){
+ html+='<div class="eyebrow">Strength training</div><h1>Less thinking.<br>More lifting.</h1><p>Choose a session and follow the clock. No account, no saved data.</p><div class="days">';
+ Object.keys(P).forEach(function(k){html+='<button class="day '+(S.day===k?'active':'')+'" data-action="day" data-id="'+k+'">'+k.toUpperCase()+'<small>'+(k==="d"?"10 min":"26 min")+'</small></button>'});
+ html+='</div><div class="panel"><div class="eyebrow">Selected workout</div><h2>'+x(w.name)+'</h2><p>'+(S.day==="d"?"10-minute alternating EMOM":"3-min warm-up · 1-min setup · 10-min heavy · 12-min circuit")+'</p>';
+ if(w.heavy)html+='<div class="row"><span>Heavy · every 2 min</span><b>'+x(w.heavy[0])+'</b></div>';
+ w.circuit.forEach(function(z,i){html+='<div class="row"><span>'+((S.day==="d"?"Alternating ":"Circuit ")+(i+1))+'</span><b>'+x(z[0])+' · '+x(z[1])+'</b></div>'});
+ html+='</div><button class="big" data-action="prepare">Prepare workout</button><div class="foot">A · B · C · 26 minutes each &nbsp; | &nbsp; D · 10 minutes</div>';
+ }else if(S.screen==="prepare"){
+ html+='<button class="ghost" data-action="home">← Back</button><h1 style="margin-top:25px">Ready for '+x(w.name)+'?</h1><div class="panel"><div class="row"><label for="snd">Audio cues</label><input id="snd" class="switch" type="checkbox" data-setting="sound" '+(S.sound?'checked':'')+'></div>';
+ if(S.day!=="d")html+='<div class="row"><label for="sore">High BJJ soreness<br><span class="small">Recovery replaces heavy set 5</span></label><input id="sore" class="switch" type="checkbox" data-setting="sore" '+(S.sore?'checked':'')+'></div>';
+ html+='</div><p>Tap <b>Mark set done</b> during each interval. No weights or reps until you finish.</p><div class="notice">Keep Safari open during the workout for visible countdown and sounds. Lock Screen and silent-switch playback are not guaranteed.</div><button class="big" data-action="start">Start '+(total()/60)+'-minute workout</button>';
+ }else if(S.screen==="timer"){
+ f=frame(elapsed());var done=f.slot!==null&&S.done.has(f.slot);
+ html+='<div class="timer-top"><button class="ghost" data-action="finish">Finish</button><div class="eyebrow">Day '+S.day.toUpperCase()+' · '+S.speed+'×</div></div><div class="progress"><i style="width:'+(100*(1-f.left/total())).toFixed(2)+'%"></i></div><div class="phase">'+x(f.phase)+(f.count?' · '+f.round+'/'+f.count:'')+'</div><div class="clock '+(f.rem<=3?'red':f.rem<=10?'amber':'')+'">'+fmt(f.rem)+'</div><div class="go">'+(S.paused?'PAUSED':done?'SET COMPLETE':f.go?'GO':'&nbsp;')+'</div><div class="move">'+x(f.name)+'</div><div class="target">'+x(f.target)+'</div>';
+ if(f.warm)html+='<div class="warm">'+w.warm.map(function(z){return '<div>'+x(z)+'</div>'}).join('')+'</div>';
+ else html+='<div class="next">NEXT<strong>'+x(f.next||'Workout complete')+'</strong></div>';
+ html+='<button class="check '+(done?'complete':'')+'" data-action="done" '+(f.slot===null||done||S.paused?'disabled':'')+'>'+(done?'✓ Set done':f.slot===null?'Follow the clock':'✓ Mark set done')+'</button><div class="remain">'+fmt(f.left)+' left · '+S.done.size+' sets completed</div><div class="actions"><button class="ghost" data-action="pause">'+(S.paused?'▶ Resume':'Ⅱ Pause')+'</button><button class="ghost" data-action="skip">Skip interval</button><button class="ghost" data-action="speed">'+S.speed+'× speed</button></div><div class="foot">Speed cycles: 1× → 10× → 60× · Use 60× for preview</div>';
+ }else if(S.screen==="summary"){
+ var names=[...new Set([...S.done.values()].map(function(r){return r.name}))];
+ html+='<div style="font-size:68px;color:var(--lime);text-align:center;margin:25px 0 5px">✓</div><h1 class="center">Workout complete</h1><p class="center">'+x(w.name)+' · '+fmt(S.elapsed)+' · '+S.done.size+' sets</p><div class="panel"><div class="eyebrow">You trained</div>';
+ if(!names.length)html+='<p>No completed sets were marked</p>';
+ names.forEach(function(n){html+='<div class="row"><b>'+x(n)+'</b><span>'+[...S.done.values()].filter(function(z){return z.name===n}).length+' sets</span></div>'});
+ html+='</div><div class="notice">Workout is complete even if you skip the numbers. Logging is optional.</div><button class="big" data-action="log">Fill in weights & reps (optional)</button><div class="actions"><button class="ghost" data-action="json">Export JSON</button><button class="ghost" data-action="csv">Export CSV</button></div><button class="ghost" style="width:100%" data-action="reset">Try another workout</button>';
+ }else if(S.screen==="log"){
+ html+='<button class="ghost" data-action="summary">← Summary</button><h1 style="margin-top:18px">Fill in numbers</h1><p>Weights and reps are optional. Everything is kept only while this page is open.</p><div class="panel">';
+ if(!S.done.size)html+='<p>No sets marked</p>';
+ S.done.forEach(function(r){html+='<div class="logrow"><div><b>'+x(r.name)+'</b><small>Set '+(r.slot+1)+' · '+x(r.target)+'</small></div><label>lb<input data-log="weight" data-slot="'+r.slot+'" type="number" min="0" step="2.5" placeholder="—" value="'+(r.weight==null?'':r.weight)+'"></label><label>reps<input data-log="reps" data-slot="'+r.slot+'" type="number" min="0" step="1" placeholder="—" value="'+(r.reps==null?'':r.reps)+'"></label></div>'});
+ html+='</div><button class="big" data-action="summary">Done logging</button><div class="actions"><button class="ghost" data-action="json">Export JSON</button><button class="ghost" data-action="csv">Export CSV</button></div>';
+ }
+ app.innerHTML=html;
+}
+function tone(kind){
+ if(!S.sound)return;
+ try{
+ var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+ if(!S.audio)S.audio=new AC();S.audio.resume();
+ var frequencies=kind==="complete"?[880,580]:kind==="warning"?[1120]:[660,880];
+ frequencies.forEach(function(v,i){var o=S.audio.createOscillator(),g=S.audio.createGain(),t=S.audio.currentTime+i*.13;o.frequency.value=v;o.type="sine";o.connect(g);g.connect(S.audio.destination);g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.14,t+.016);g.gain.exponentialRampToValueAtTime(.001,t+.105);o.start(t);o.stop(t+.115)});
+ }catch(err){}
+}
+function wake(){try{if(navigator.wakeLock&&document.visibilityState==="visible")navigator.wakeLock.request("screen").then(function(w){S.awake=w}).catch(function(){})}catch(err){}}
+function start(){S.screen="timer";S.speed=1;S.base=0;S.stamp=Date.now();S.paused=false;S.started=true;S.heard.clear();S.done.clear();tone("go");wake();render()}
+function finish(){S.elapsed=Math.floor(elapsed());S.started=false;S.paused=false;S.screen="summary";tone("complete");if(S.awake){try{S.awake.release()}catch(err){}}render()}
+function seek(t){S.base=Math.min(total(),Math.max(0,t));S.stamp=Date.now();if(S.base>=total())finish();else render()}
+function skip(){var e=elapsed(),t;if(S.day==="d")t=60*(Math.floor(e/60)+1);else if(e<180)t=180;else if(e<240)t=240;else if(e<840)t=240+120*(Math.floor((e-240)/120)+1);else t=840+60*(Math.floor((e-840)/60)+1);seek(t)}
+function changeSpeed(){S.base=elapsed();S.stamp=Date.now();S.speed=S.speed===1?10:S.speed===10?60:1;render()}
+function exportFile(kind){
+ var records=[...S.done.values()],name="healthy-strength-"+S.day+"-"+kind;
+ var data,typ;if(kind==="json"){data=JSON.stringify({day:S.day,workout:P[S.day].name,durationSeconds:S.elapsed,completedSets:records.length,sets:records},null,2);typ="application/json"}else{var rows=[["day","slot","movement","target","weight_lb","reps"]].concat(records.map(function(r){return [S.day,r.slot+1,r.name,r.target,r.weight==null?"":r.weight,r.reps==null?"":r.reps]}));data=rows.map(function(row){return row.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(",")}).join("\r\n");typ="text/csv"}
+ var blob=new Blob([data],{type:typ}),u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=name+"."+(kind==="json"?"json":"csv");document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},5000);
+}
+app.addEventListener("click",function(ev){
+ var btn=ev.target.closest("button[data-action]");if(!btn)return;
+ var a=btn.dataset.action;
+ if(a==="day"){S.day=btn.dataset.id;render()}
+ else if(a==="prepare"){S.screen="prepare";render()}
+ else if(a==="home"||a==="reset"){S.started=false;S.screen="home";render()}
+ else if(a==="start")start();
+ else if(a==="finish"){if(window.confirm("Finish this workout now?"))finish()}
+ else if(a==="done"){var f=frame(elapsed());if(f.slot!==null&&!S.done.has(f.slot)&&!S.paused){S.done.set(f.slot,{slot:f.slot,name:f.name,target:f.target,weight:null,reps:null});if(navigator.vibrate)navigator.vibrate(35);render()}}
+ else if(a==="pause"){if(S.paused){S.stamp=Date.now();S.paused=false;wake()}else{S.base=elapsed();S.paused=true}render()}
+ else if(a==="skip")skip();
+ else if(a==="speed")changeSpeed();
+ else if(a==="summary"){S.screen="summary";render()}
+ else if(a==="log"){S.screen="log";render()}
+ else if(a==="json"||a==="csv")exportFile(a);
+});
+app.addEventListener("change",function(e){
+ var t=e.target;
+ if(t.dataset.setting==="sound")S.sound=t.checked;
+ if(t.dataset.setting==="sore")S.sore=t.checked;
+ if(t.dataset.log){var record=S.done.get(Number(t.dataset.slot));if(record)record[t.dataset.log]=t.value===""?null:Number(t.value)}
+});
+document.addEventListener("visibilitychange",function(){if(S.screen==="timer"&&!S.paused&&document.visibilityState==="visible")wake()});
+setInterval(function(){
+ if(S.screen!=="timer"||S.paused||!S.started)return;
+ if(elapsed()>=total()){finish();return}
+ var f=frame(elapsed()),key=f.phase+":"+f.slot+":"+f.round;
+ if(!S.heard.has(key)){S.heard.add(key);tone("go")}
+ if(f.slot!==null&&f.rem===3&&!S.heard.has(key+"-warn")){S.heard.add(key+"-warn");tone("warning")}
+ render();
+},250);
+render();
+})();
+</script></body></html>
