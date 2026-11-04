@@ -128,7 +128,12 @@ setInterval(function(){
  var f=frame(elapsed()),key=f.phase+":"+f.slot+":"+f.round;
  if(!S.heard.has(key)){S.heard.add(key);tone("go")}
  if(f.slot!==null&&f.rem===3&&!S.heard.has(key+"-warn")){S.heard.add(key+"-warn");tone("warning")}
- render();
+ if(S.visibleKey!==key){S.visibleKey=key;render();return}
+ var clock=app.querySelector(".clock"),remaining=app.querySelector(".remain"),bar=app.querySelector(".progress i"),state=app.querySelector(".go");
+ if(clock){clock.textContent=fmt(f.rem);clock.classList.toggle("amber",f.rem>3&&f.rem<=10);clock.classList.toggle("red",f.rem<=3)}
+ if(remaining)remaining.textContent=fmt(f.left)+" left · "+S.done.size+" sets completed";
+ if(bar)bar.style.width=(100*(1-f.left/total())).toFixed(2)+"%";
+ if(state)state.textContent=S.paused?"PAUSED":f.slot!==null&&S.done.has(f.slot)?"SET COMPLETE":f.go?"GO":"";
 },250);
 render();
 })();
